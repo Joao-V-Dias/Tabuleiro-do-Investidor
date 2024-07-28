@@ -131,8 +131,8 @@ programa
     	funcao inteiro verificaCasa(inteiro player, inteiro player1P, inteiro player2P, inteiro vez)
     	{
     		cadeia texto = ""
-    		inteiro trocaCasa = 0, temporizador = 2000
-		exibeTabuleiro(player1P, player2P, texto, temporizador)
+    		inteiro trocaCasa = 0
+		exibeTabuleiro(player1P, player2P, texto, 1500)
 
         	g.definir_cor(g.COR_BRANCO)
 		g.limpar()
@@ -171,7 +171,6 @@ programa
             		trocaCasa = player2P
         			player2P = player1P
         			player1P = trocaCasa
-        			escreva(player1P)
             	pare
             	caso 11:
             		texto = "O mercado está em alta e seus investimentos estão crescendo. Isso é um incentivo para seguir adiante."
@@ -189,8 +188,7 @@ programa
             	caso 15:
                	cadeia cantou
                	texto = "Diversificar ou simplificar? Se você cantar um trecho de uma música, mostra confiança e segue em frente. Se não, volta duas casas para reconsiderar suas escolhas."
-               	temporizador = 0
-               	exibeTabuleiro(player1P, player2P, texto, temporizador)
+               	exibeTabuleiro(player1P, player2P, texto, 0)
 
 				enquanto(verdadeiro){
 					se(t.tecla_pressionada(t.TECLA_N)){
@@ -231,9 +229,7 @@ programa
         	}senao{
         		player2P = player
         	}
-
-		temporizador = 4500
-        	exibeTabuleiro(player1P, player2P, texto, temporizador)
+        	exibeTabuleiro(player1P, player2P, texto, 5000)
 
         	retorne player
 	}
@@ -267,6 +263,7 @@ programa
 		               g.desenhar_texto(750, 400, "Número Sorteado: " + dado)
 		               g.renderizar()
 		               u.aguarde(2000)
+		               exibeTabuleiro(player1P, player2P, "" , 1000)
 					
 		           	se(vez == 1){
 		                	se(bloqueio1P == 0){
@@ -327,7 +324,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 180; 
+ * @POSICAO-CURSOR = 8992; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
