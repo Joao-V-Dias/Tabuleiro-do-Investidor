@@ -141,11 +141,11 @@ programa
         	escolha(player)
         	{
           	caso 2:
-          		texto = "Você encontrou uma oportunidade incrível de comprar ações baratas. Aproveitando o momento, você dá um salto para a Casa 5."
+          		texto = "Você encontrou uma oportunidade incrível de comprar ações baratas. \nAproveitando o momento, você dá um salto para a Casa 5."
                 	player = 5
             	pare
             	caso 3:
-            		texto = "Hora de avaliar os riscos. Você tira um tempo para analisar suas opções e joga um dado extra para ver onde isso te leva."
+            		texto = "Hora de avaliar os riscos. \nVocê tira um tempo para analisar suas opções e joga um dado extra de 1 a 3 para ver onde isso te leva."
                 	player += u.sorteia(1, 3)
             	pare
             	caso 4:
@@ -158,7 +158,7 @@ programa
         			texto = "As notícias não são ótimas, mas você está bem por ter diversificado. Segue em frente, mas de olho no mercado."
         		pare
         		caso 7:
-        			texto = "O mercado está agitado! Você decide esperar uma rodada para ver como as coisas se desenrolam. Fique uma rodada sem jogar!"
+        			texto = "O mercado está agitado! Você decide esperar uma rodada para ver como as coisas se desenrolam. \nFique uma rodada sem jogar!"
         		pare
         		caso 8:
         			texto = "Uma nova tecnologia está fazendo barulho. Você investe em empresas de tecnologia, esperando que seja um bom movimento."
@@ -167,7 +167,7 @@ programa
         			texto = "Você conversa com alguns especialistas que te dão dicas valiosas. Agora você se sente mais preparado para os próximos passos."
         		pare
             	caso 10:
-            		texto = "O mercado muda de repente e você precisa ajustar sua carteira. Troca de posição com outro jogador, tentando se reposicionar para o sucesso."
+            		texto = "O mercado muda de repente e você precisa ajustar sua carteira. \nTroca de posição com outro jogador, tentando se reposicionar para o sucesso."
             		trocaCasa = player2P
         			player2P = player1P
         			player1P = trocaCasa
@@ -176,7 +176,7 @@ programa
             		texto = "O mercado está em alta e seus investimentos estão crescendo. Isso é um incentivo para seguir adiante."
         		pare
             	caso 12:
-            		texto = "Você se precipitou e vendeu ações que poderiam ter crescido mais. Uma lição de paciência aprendida, você volta uma casa."
+            		texto = "Você se precipitou e vendeu ações que poderiam ter crescido mais. \nUma lição de paciência aprendida, e você volta uma casa."
             		player -= 1
             	pare
             	caso 13:
@@ -187,7 +187,7 @@ programa
         		pare
             	caso 15:
                	cadeia cantou
-               	texto = "Diversificar ou simplificar? Se você cantar um trecho de uma música, mostra confiança e segue em frente. Se não, volta duas casas para reconsiderar suas escolhas."
+               	texto = "\nCante um trecho de uma música, mostre confiança e siga em frente ou volte 2 casas. Aperte S para sim e N para não"
                	exibeTabuleiro(player1P, player2P, texto, 0)
 
 				enquanto(verdadeiro){
@@ -211,7 +211,7 @@ programa
         			texto = "Novas regulamentações no mercado causam um pouco de confusão, mas acabam trazendo mais estabilidade. Isso é bom para os seus investimentos."
         		pare
             	caso 19:
-            		texto = "O mercado desaba e você perde quase tudo. De volta à estaca zero na Casa 1, é hora de começar novamente com mais sabedoria."
+            		texto = "O mercado desaba e você perde quase tudo. \nDe volta à estaca zero na Casa 1, é hora de começar novamente com mais sabedoria."
                 	player = 1
             	pare
             	caso 20:
