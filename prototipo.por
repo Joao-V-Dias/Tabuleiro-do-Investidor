@@ -1,22 +1,20 @@
 programa
 {
-	inclua biblioteca Graficos --> g
-	inclua biblioteca Teclado --> t
-	inclua biblioteca Util --> u
+	inclua biblioteca Graficos --> g //Gerar imagens
+	inclua biblioteca Teclado --> t //usar teclas do teclado
+	inclua biblioteca Util --> u //usado para fazer sorteio de números e temporizadores
 	
 
-	funcao inicio()
-	{
-		inteiro logo = g.carregar_imagem("logo.PNG")
-		inteiro opcao = -1, player1Ponto = 0, player2Ponto = 0
+	funcao inicio(){
+		inteiro logo = g.carregar_imagem("logo.PNG"), opcao = -1, player1Ponto = 0, player2Ponto = 0
 		
 		g.iniciar_modo_grafico(verdadeiro)
 		//g.definir_dimensoes_janela(1700, 900)
-		g.entrar_modo_tela_cheia()
+		g.entrar_modo_tela_cheia() //entra na tela cheia
 				
 		
-        	enquanto (verdadeiro)
-        	{
+        	enquanto (verdadeiro){//loop da tela inicial
+        		
         		g.definir_cor(g.COR_BRANCO)
 			g.limpar()
 			g.definir_cor(g.COR_PRETO)
@@ -29,20 +27,20 @@ programa
 
 			g.renderizar()
 
-			se (t.tecla_pressionada(t.TECLA_1)){
+			se (t.tecla_pressionada(t.TECLA_1)){ //jogar
            		opcao = 1
         		}
-        		se (t.tecla_pressionada(t.TECLA_2)){
+        		se (t.tecla_pressionada(t.TECLA_2)){ //resultado
             		opcao = 2
         		}
-        		se (t.tecla_pressionada(t.TECLA_3)){
+        		se (t.tecla_pressionada(t.TECLA_3)){ //sair da tela
             		opcao = 3
         		}
 
-        		se(opcao != -1){
+        		se(opcao != -1){ //verificar opcao (jogar, resultado ou sair da tela)
         			escolha(opcao)
             		{
-	               	caso 1:
+	               	caso 1: //chama função jogar() caso tecla 1
 	                    	inteiro resultadoJogo = jogar()
 	                    	se(resultadoJogo == 1){
 	                    		player1Ponto++
@@ -51,15 +49,15 @@ programa
 	                    	}
 	                    	opcao = -1
 	                    	pare
-	                	caso 2:
+	                	caso 2: //chama função resultado() caso tecla 2
 	                    	resultado(player1Ponto, player2Ponto)
 	                    	opcao = -1
 	                    	pare
-	                	caso 3:
+	                	caso 3: //Fecha o jogo caso tecla 3
 	                    	g.fechar_janela()
 	                    	opcao = -1
 	                    	pare
-	                	caso contrario:
+	                	caso contrario: //Se não apertar nenhuma das 3 teclas
 	                    	opcao = -1
 	                    	pare
 				}
@@ -67,7 +65,7 @@ programa
 		}
 	}
 
-	funcao resultado(inteiro player1Ponto, inteiro player2Ponto){
+	funcao resultado(inteiro player1Ponto, inteiro player2Ponto){ //função para mostrar o placar do jogo (número de vitórias)
 		inteiro ponto[2]
 
 		ponto[0] = player1Ponto
@@ -77,7 +75,8 @@ programa
 		g.limpar()
 		g.definir_cor(g.COR_PRETO)
 		g.desenhar_texto(700, 200, "Número de Vitórias!")
-		para(inteiro i = 1; i <= 2 ; i++){
+		
+		para(inteiro i = 1; i <= 2 ; i++){ //desenha a tabela de vitórias
 			g.desenhar_retangulo(420 * i, 400, 420, 76, falso, falso)
 			g.desenhar_texto((420 * i) + 5, 402, "Jogador " + i)
 			g.desenhar_linha(420 * i, 439, (420 * i) + 420, 439)
@@ -86,7 +85,7 @@ programa
 		g.desenhar_texto(650, 550, "Aperte ESC para voltar!")
 		g.renderizar()
 
-		enquanto(verdadeiro){
+		enquanto(verdadeiro){ //Verdadeiro enquanto não é digitado a tecla ESC
 			se(t.tecla_pressionada(t.TECLA_ESC)){
 				pare
 			}
@@ -94,17 +93,16 @@ programa
 		
 	}
 
-	funcao exibeTabuleiro(inteiro player1P, inteiro player2P, cadeia texto, inteiro temporizador)
-    	{
-		inteiro player1Img = g.carregar_imagem("1.png")
-		inteiro player2Img = g.carregar_imagem("2.png")
-		inteiro fim = g.carregar_imagem("fim.png")
+	funcao exibeTabuleiro(inteiro player1P, inteiro player2P, cadeia texto, inteiro temporizador){//Desenha e mostra o tabuleiro
+		inteiro player1Img = g.carregar_imagem("1.png") //Bandeirinha do player 1
+		inteiro player2Img = g.carregar_imagem("2.png") //Bandeirinha do player 2
+		inteiro fim = g.carregar_imagem("fim.png") //bandeira do fim
     		
     		     g.definir_cor(g.COR_BRANCO)
 			g.limpar()
 			g.definir_cor(g.COR_PRETO)
 			
-     	para(inteiro i = 1; i <= 20; i++)
+     	para(inteiro i = 1; i <= 20; i++) //Verifica e mostra a casa que o player está
         	{
         		g.definir_tamanho_texto(22.00)
         		g.desenhar_texto(64, 70, texto + "")
@@ -112,39 +110,38 @@ programa
         		g.desenhar_retangulo(76 * i, 400, 76, 76, falso, falso)
         		g.desenhar_texto((76 * i) + 2, 402, i + "")
             	
-            	se(i == player1P)
+            	se(i == player1P) //Mostra a bandeira do player 1 na casa i
             	{
                 	g.desenhar_imagem(76 * i, 410, player1Img)
             	}
-            	se(i == player2P)
+            	se(i == player2P) //Mostra a bandeira do player 2 na casa i
             	{
                	g.desenhar_imagem((76 * i) + 35, 410, player2Img)
             	}
-            	se(i == 20){
+            	se(i == 20){ //desenha a bandeirinha do fim na casa 20
             		g.desenhar_imagem(76 * i, 345, fim)
             	}
 		}
 		g.renderizar()
-        	u.aguarde(temporizador)
+        	u.aguarde(temporizador) 
 	}
 
-    	funcao inteiro verificaCasa(inteiro player, inteiro player1P, inteiro player2P, inteiro vez)
-    	{
+    	funcao inteiro verificaCasa(inteiro player, inteiro player1P, inteiro player2P, inteiro vez){//Verifica onde está o player e mostra a mensagem dependendo da casa
+
     		cadeia texto = ""
     		inteiro trocaCasa = 0
-		exibeTabuleiro(player1P, player2P, texto, 1500)
+		exibeTabuleiro(player1P, player2P, texto, 1500) //chama a função exibeTabuleiro()
 
         	g.definir_cor(g.COR_BRANCO)
 		g.limpar()
 		g.definir_cor(g.COR_PRETO)
         
-        	escolha(player)
-        	{
-          	caso 2:
+        	escolha(player){
+          	caso 2: //Joga o player na casa 5
           		texto = "Você encontrou uma oportunidade incrível de comprar ações baratas. \nAproveitando o momento, você dá um salto para a Casa 5."
                 	player = 5
             	pare
-            	caso 3:
+            	caso 3: //sorteia mais um dado de 1 a 3 para o mesmo player
             		texto = "Hora de avaliar os riscos. \nVocê tira um tempo para analisar suas opções e joga um dado extra de 1 a 3 para ver onde isso te leva."
                 	player += u.sorteia(1, 3)
             	pare
@@ -157,7 +154,7 @@ programa
         		caso 6:
         			texto = "As notícias não são ótimas, mas você está bem por ter diversificado. Segue em frente, mas de olho no mercado."
         		pare
-        		caso 7:
+        		caso 7: //O player fica uma rodada sem jogar
         			texto = "O mercado está agitado! Você decide esperar uma rodada para ver como as coisas se desenrolam. \nFique uma rodada sem jogar!"
         		pare
         		caso 8:
@@ -166,7 +163,7 @@ programa
         		caso 9:
         			texto = "Você conversa com alguns especialistas que te dão dicas valiosas. Agora você se sente mais preparado para os próximos passos."
         		pare
-            	caso 10:
+            	caso 10: //troca a casa de um player com o outro
             		texto = "O mercado muda de repente e você precisa ajustar sua carteira. \nTroca de posição com outro jogador, tentando se reposicionar para o sucesso."
             		trocaCasa = player2P
         			player2P = player1P
@@ -175,7 +172,7 @@ programa
             	caso 11:
             		texto = "O mercado está em alta e seus investimentos estão crescendo. Isso é um incentivo para seguir adiante."
         		pare
-            	caso 12:
+            	caso 12: //o player volta uma casa no tabuleiro
             		texto = "Você se precipitou e vendeu ações que poderiam ter crescido mais. \nUma lição de paciência aprendida, e você volta uma casa."
             		player -= 1
             	pare
@@ -185,17 +182,17 @@ programa
         		caso 14:
         			texto = "Suas ações estão pagando dividendos. É bom ver um retorno direto, reforçando sua confiança."
         		pare
-            	caso 15:
+            	caso 15: //o player deve digitar S ou N (sim ou não) para cantar uma música na vida real. Se não, o player volta uma casa
                	cadeia cantou
                	texto = "\nCante um trecho de uma música, mostre confiança e siga em frente ou volte 2 casas. Aperte S para sim e N para não"
                	exibeTabuleiro(player1P, player2P, texto, 0)
 
-				enquanto(verdadeiro){
-					se(t.tecla_pressionada(t.TECLA_N)){
+				enquanto(verdadeiro){ //verdadeiro enquanto o usuário não digitar S e nem N
+					se(t.tecla_pressionada(t.TECLA_N)){ //Se o player digitar N (para não) ele volta duas casa
 						player -= 2
 						pare
 					}
-					se(t.tecla_pressionada(t.TECLA_S)){
+					se(t.tecla_pressionada(t.TECLA_S)){ //Se digitar S deve cantar uma música na vida real
 						pare
 					}
 				}
@@ -210,14 +207,14 @@ programa
         		caso 18:
         			texto = "Novas regulamentações no mercado causam um pouco de confusão, mas acabam trazendo mais estabilidade. Isso é bom para os seus investimentos."
         		pare
-            	caso 19:
-            		texto = "O mercado desaba e você perde quase tudo. \nDe volta à estaca zero na Casa 1, é hora de começar novamente com mais sabedoria."
+            	caso 19: //o player volta para a casa 1
+            		texto = "O mercado desaba e você perde quase tudo. \nDe volta à estaca zero na casa 1, é hora de começar novamente com mais sabedoria."
                 	player = 1
             	pare
-            	caso 20:
-            		se(vez == 1){
+            	caso 20: //o player ganha
+            		se(vez == 1){//player 1 ganhou
             			texto = "Você superou todos os desafios e chegou ao topo como um investidor de sucesso. Parabéns, jogador 1 venceu!"
-            		}senao{
+            		}senao{//player 2 ganhou
             			texto = "Você superou todos os desafios e chegou ao topo como um investidor de sucesso. Parabéns, jogador 2 venceu!"
             		}
             	pare
@@ -229,12 +226,12 @@ programa
         	}senao{
         		player2P = player
         	}
-        	exibeTabuleiro(player1P, player2P, texto, 5000)
+        	exibeTabuleiro(player1P, player2P, texto, 5000) //chama a função exibeTabuleiro()
 
         	retorne player
 	}
 
-    	funcao inteiro jogar(){
+    	funcao inteiro jogar(){ //função quando o usuário apertar a tecla 1
         	inteiro dado = 0, vez = 1, player1P = 1, player2P = 1, bloqueio1P = 0, bloqueio2P = 0
 
         	enquanto(player1P < 20 e player2P < 20){
@@ -324,7 +321,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 8992; 
+ * @POSICAO-CURSOR = 9883; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
