@@ -6,10 +6,12 @@ programa
 	
 
 	funcao inicio(){
-		inteiro logo = g.carregar_imagem("logo.PNG"), opcao = -1, player1Ponto = 0, player2Ponto = 0
+		inteiro logo = g.carregar_imagem("homeImg.JPG"), opcao = -1, player1Ponto = 0, player2Ponto = 0
 		
 		g.iniciar_modo_grafico(verdadeiro)
-		//g.definir_dimensoes_janela(1700, 900)
+		g.definir_titulo_janela("Investidor Rico") // define o titulo da janela
+		inteiro tamanhoJanela = g.largura_tela()
+		logo = g.redimensionar_imagem(logo, tamanhoJanela, (tamanhoJanela / 16) * 9, verdadeiro) // define o tamanho da imagem igual ao da tela
 		g.entrar_modo_tela_cheia() //entra na tela cheia
 				
 		
@@ -18,12 +20,12 @@ programa
         		g.definir_cor(g.COR_BRANCO)
 			g.limpar()
 			g.definir_cor(g.COR_PRETO)
-			g.definir_tamanho_texto(32.00)
-			g.desenhar_imagem(550, 10, logo)
-          	g.desenhar_texto(64, 400, "1 - Jogar")
-          	g.desenhar_texto(64, 430, "2 - Resultado")
-           	g.desenhar_texto(64, 460, "3 - Sair")
-            	g.desenhar_texto(64, 500, "Digite o númeror da opção que deseja! ")
+			g.definir_tamanho_texto(34.00)
+			g.desenhar_imagem(0, 0, logo)
+          	g.desenhar_texto(400, 400, "1 - Jogar")
+          	g.desenhar_texto(400, 430, "2 - Resultado")
+           	g.desenhar_texto(400, 460, "3 - Sair")
+            	g.desenhar_texto(400, 500, "Digite o númeror da opção que deseja! ")
 
 			g.renderizar()
 
@@ -221,7 +223,7 @@ programa
         	se(vez == 1 e player != 10){ //Se for a vez do player 1
         		player1P = player //Posição do player 1 = onde o player atual está, que é o 1
         		
-        	}senao{//Se for a vez do player 2
+        	}senao se(vez == 2 e player != 10){//Se for a vez do player 2
         		player2P = player //Posição do player 2 = onde o player atual está, que é o 2
         	}
         	exibeTabuleiro(player1P, player2P, texto, 5000) //chama a função exibeTabuleiro()
@@ -356,13 +358,12 @@ programa
 		}
 	}
 }
-
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 5241; 
+ * @POSICAO-CURSOR = 15794; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
