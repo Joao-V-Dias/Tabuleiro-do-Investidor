@@ -38,10 +38,9 @@ programa
         		}
 
         		se(opcao != -1){ //verificar opcao (jogar, resultado ou sair da tela)
-        			escolha(opcao)
-            		{
+        			escolha(opcao){
 	               	caso 1: //chama função jogar() caso tecla 1
-	                    	inteiro resultadoJogo = jogar()
+	                    	inteiro resultadoJogo = jogar() //retorna o resultado do jogo
 	                    	se(resultadoJogo == 1){
 	                    		player1Ponto++
 	                    	}senao{
@@ -143,7 +142,7 @@ programa
             	pare
             	caso 3: //sorteia mais um dado de 1 a 3 para o mesmo player
             		texto = "Hora de avaliar os riscos. \nVocê tira um tempo para analisar suas opções e joga um dado extra de 1 a 3 para ver onde isso te leva."
-                	player += u.sorteia(1, 3)
+                	//player += u.sorteia(1, 3)
             	pare
             	caso 4:
             		texto = "Seus primeiros investimentos estão rendendo um pouco. Não é uma fortuna, mas é um bom começo!"
@@ -220,11 +219,11 @@ programa
             	pare
         	}
 
-        	se(vez == 1 e player != 10){
-        		player1P = player
+        	se(vez == 1 e player != 10){ //Se for a vez do player 1
+        		player1P = player //Posição do player 1 = onde o player atual está, que é o 1
         		
-        	}senao{
-        		player2P = player
+        	}senao{//Se for a vez do player 2
+        		player2P = player //Posição do player 2 = onde o player atual está, que é o 2
         	}
         	exibeTabuleiro(player1P, player2P, texto, 5000) //chama a função exibeTabuleiro()
 
@@ -234,81 +233,124 @@ programa
     	funcao inteiro jogar(){ //função quando o usuário apertar a tecla 1
         	inteiro dado = 0, vez = 1, player1P = 1, player2P = 1, bloqueio1P = 0, bloqueio2P = 0
 
-        	enquanto(player1P < 20 e player2P < 20){
+        	enquanto(player1P < 20 e player2P < 20){//Joga enquanto player 1 e 2 não chegar na casa 20
         		
             	g.definir_cor(g.COR_BRANCO)
 			g.limpar()
 			g.definir_cor(g.COR_PRETO)
 			g.definir_tamanho_texto(32.00)
-
-            	g.desenhar_texto(750, 200, "Vez do jogador " + vez + "!")
-            	se(bloqueio1P == 1 e vez == 1 ou bloqueio2P == 1 e vez == 2){
-            		g.desenhar_texto(710, 250, "Voce foi impedido de jogar!")
-            		g.desenhar_texto(650, 500, "Aperte ENTER para passar a vez!")
-            	}senao{
+            	
+            	se(bloqueio1P == 1 e vez == 1 ou bloqueio2P == 1 e vez == 2){//Se o player 1 ou 2 estiverem bloqueados de jogar
+            		se(vez == 1){//Se player 1 bloqueado, passa para o jogador 2
+            			g.desenhar_texto(600, 100, "Jogador 1 está uma rodada sem jogar")
+            			g.desenhar_texto(750, 200, "Vez do jogador 2!")
+            			g.desenhar_texto(650, 500, "Para jogar o dado aperte ENTER!")
+            		}
+            		se(vez == 2){//Se player 2 bloqueado, passa para o jogador 1
+            			g.desenhar_texto(600, 100, "Jogador 2 está uma rodada sem jogar")
+            			g.desenhar_texto(750, 200, "Vez do jogador 1!")
+            			g.desenhar_texto(650, 500, "Para jogar o dado aperte ENTER!")
+            		}
+            	}senao{//Se nenhum player estiver bloqueado
+            		g.desenhar_texto(750, 200, "Vez do jogador " + vez + "!")
             		g.desenhar_texto(650, 500, "Para jogar o dado aperte ENTER!")
             	}
             	g.renderizar()
 
-			enquanto(verdadeiro){
-				se (t.tecla_pressionada(t.TECLA_ENTER)){
-					dado = u.sorteia(1, 6)
+			enquanto(verdadeiro){//Verdadeiro enquanto um certo jogador estiver jogando
+				se (t.tecla_pressionada(t.TECLA_ENTER)){//Joga o dado, ou passa a vez, quando pressionado ENTER
+					dado = u.sorteia(1, 6) //sorteia um número de 1 a 6
 					
-		               g.definir_cor(g.COR_BRANCO)
-					g.limpar()
-					g.definir_cor(g.COR_PRETO)
-		               g.desenhar_texto(750, 400, "Número Sorteado: " + dado)
-		               g.renderizar()
-		               u.aguarde(2000)
-		               exibeTabuleiro(player1P, player2P, "" , 1000)
+					se(bloqueio1P == 0 e vez == 1 ou bloqueio2P == 0 e vez == 2){ //Se tiver com bloqueio não mostra número sorteado
+		               		g.definir_cor(g.COR_BRANCO)
+							g.limpar()
+							g.definir_cor(g.COR_PRETO)
+		              	 		g.desenhar_texto(750, 400, "Número Sorteado: " + dado)
+		               		g.renderizar()
+		               		u.aguarde(2000)
+		               		exibeTabuleiro(player1P, player2P, "" , 1000)
+					}
 					
-		           	se(vez == 1){
-		                	se(bloqueio1P == 0){
-		                		player1P += dado
+		           	se(vez == 1){ //Se for o player 1
+		                	se(bloqueio1P == 0){//Se player 1 não estiver bloqueado
+		                		player1P += dado //Acrescenta posição, que foi sorteada no dado, no tabuleiro para o player 1
+		                		
 			                	se(player1P > 20){
 			                		player1P = 20	
 			                	}
-		                		player1P = verificaCasa(player1P, player1P, player2P, vez)
+		                		player1P = verificaCasa(player1P, player1P, player2P, vez) //player1P = player
 
-		                		se(player1P == 10){
+		                		se(player1P == 10){ //Se player 1 caiu na casa 10
 			                		inteiro trocaCasa = player1P
 			                		player1P = player2P
 			                		player2P = trocaCasa
+			                		exibeTabuleiro(player1P, player2P, "" , 1000)//Chama a função exibeTabuleiro, mostrando a troca
 			                	}
-			                	se(player1P == 7){
-			                		bloqueio1P = 1
+			                	se(player1P == 7){//Se player 1 caiu na casa 7
+			                		bloqueio1P = 1 //Player 1 foi bloqueado por 1 partida
 			                	}
-		                	}senao{
+			                	se(player1P == 3){
+			                		inteiro dado3 = u.sorteia(1, 3)//dado adicional de 1 a 3
+			                		player1P += dado3
+			                		
+			                		g.definir_cor(g.COR_BRANCO)
+								g.limpar()
+								g.definir_cor(g.COR_PRETO)
+								g.definir_tamanho_texto(32.00)
+		              	 			g.desenhar_texto(750, 400, "Dado adicional: " + dado3)
+		               			g.renderizar()
+		               			u.aguarde(2000)
+		               			exibeTabuleiro(player1P, player2P, "" , 2000)//Chama a função exibeTabuleiro 
+			                	}
+		                	}senao{//Se player 1 estiver bloqueado
 		                		bloqueio1P = 0
 		                	}
-		                	vez = 2
+		                	vez = 2 //Passa a vez para o player 2
 		            	}
-		            	senao{
-		                	se(bloqueio2P == 0){
-		                		player2P += dado
+		            	senao{ //Se for o player 2
+		                	se(bloqueio2P == 0){ //Se player 2 não estiver bloqueado
+		                		player2P += dado //Acrescenta posição, que foi sorteada no dado, no tabuleiro para o player 2
 			                	se(player2P > 20){
 			                		player2P = 20	
 			               	}
-		                		player2P = verificaCasa(player2P, player1P, player2P, vez)
+		                		player2P = verificaCasa(player2P, player1P, player2P, vez) //player1P = player
 
-		                		se(player2P == 10){
+		                		se(player2P == 10){ //Se player 2 caiu na casa 10
 			                		inteiro trocaCasa = player1P
 			                		player1P = player2P
 			                		player2P = trocaCasa
+			                		exibeTabuleiro(player1P, player2P, "" , 1000)//Chama a função exibeTabuleiro, mostrando a troca
 			                	}
-			                	se(player2P == 7){
-			                		bloqueio2P = 1
+			                	se(player2P == 7){ //Se player 2 caiu na casa 7
+			                		bloqueio2P = 1 //Player 2 foi bloqueado por 1 partida
 			                	}
-		                	}senao{
+			                	se(player2P == 3){
+			                		inteiro dado3 = u.sorteia(1, 3)//dado adicional de 1 a 3
+			                		player2P += dado3
+			                		
+			                		g.definir_cor(g.COR_BRANCO)
+								g.limpar()
+								g.definir_cor(g.COR_PRETO)
+								g.definir_tamanho_texto(32.00)
+		              	 			g.desenhar_texto(750, 400, "Dado adicional: " + dado3)
+		               			g.renderizar()
+		               			u.aguarde(2000)
+		               			exibeTabuleiro(player1P, player2P, "" , 2000)//Chama a função exibeTabuleiro 
+			                	}
+		                	}senao{ //Se player 1 estiver bloqueado
 		                		bloqueio2P = 0
 		                	}
-		                	vez = 1
+		                	vez = 1 //Passa a vez para o player 1
 		            	}
+		            	se(bloqueio1P == 1 e bloqueio2P == 1){ //Se os dois caírem na casa 7, o bloqueio é anulado
+						bloqueio1P = 0
+						bloqueio2P = 0
+					}
 		            	pare
 				}
 			}
 		}
-		se(player1P == 20){
+		se(player1P == 20){ //Verifica e retorna qual player ganhou
 			retorne 1
 		}senao{
 			retorne 2
@@ -321,7 +363,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 9883; 
+ * @POSICAO-CURSOR = 13994; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
