@@ -142,7 +142,6 @@ programa
             	pare
             	caso 3: //sorteia mais um dado de 1 a 3 para o mesmo player
             		texto = "Hora de avaliar os riscos. \nVocê tira um tempo para analisar suas opções e joga um dado extra de 1 a 3 para ver onde isso te leva."
-                	//player += u.sorteia(1, 3)
             	pare
             	caso 4:
             		texto = "Seus primeiros investimentos estão rendendo um pouco. Não é uma fortuna, mas é um bom começo!"
@@ -363,7 +362,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 13994; 
+ * @POSICAO-CURSOR = 5241; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
